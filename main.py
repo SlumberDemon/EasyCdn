@@ -5,7 +5,6 @@ from deta import Drive
 from fastapi.templating import Jinja2Templates
 
 pages = Jinja2Templates(directory="pages")
-cdn = os.getenv("NAME")
 files = Drive("EasyCdn")
 app = fastapi.FastAPI()
 
@@ -20,8 +19,7 @@ def upload_file(password: str, file: fastapi.UploadFile = fastapi.File(...)):
     if password == str(os.getenv("PASSWORD")):
         name = files.put(file.filename.replace(" ", "_"), file.file)
         return {
-            "file": f"https://{cdn}.deta.dev/{name}",
-            "embed": f"https://{cdn}.deta.dev/embed/{name}",
+            "file": f"{name}",
         }
     else:
         return {"Error": "Password incorrect"}
