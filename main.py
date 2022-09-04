@@ -34,19 +34,3 @@ def cdn(name: str):
     return fastapi.responses.StreamingResponse(
         img.iter_chunks(), media_type=f"image/{ext}"
     )
-
-
-@app.get("/embed/{name}")
-def embeded_image(name: str):
-    return fastapi.responses.HTMLResponse(
-        f"""
-        <meta name="twitter:card" content="summary_large_image">
-        <meta property="og:title" content="{cdn} | Hosted with EasyCdn"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:image" content="https://{cdn}.deta.dev/{name}"/>
-        <meta property="og:url" content="https://{cdn}.deta.dev"/>
-        <meta name="url" content="https://{cdn}.deta.dev">
-        <meta name="theme-color" content="#9ECFC2">
-        <img alt="File" src="https://{cdn}.deta.dev/{name}">
-        """
-    )
