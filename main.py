@@ -17,7 +17,7 @@ async def home(request: fastapi.Request):
 
 @app.post("/upload")
 def upload_file(password: str, file: fastapi.UploadFile = fastapi.File(...)):
-    if password == os.getenv("PASSWORD"):
+    if password == str(os.getenv("PASSWORD")):
         name = files.put(file.filename.replace(" ", "_"), file.file)
         return {
             "file": f"https://{cdn}.deta.dev/{name}",
