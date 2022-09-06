@@ -1,4 +1,0 @@
-python-multipart
-fastapi
-jinja2
-deta
