@@ -1,0 +1,17 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    color: black;
+    background: #f1f1f1;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+}
+
+a,
+u {
+    text-decoration: none !important;
+}
