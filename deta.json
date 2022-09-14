@@ -3,11 +3,6 @@
 	"description": "Host your own cdn in seconds",
 	"env": [
 		{
-			"key": "NAME",
-			"description": "Cdn name",
-			"required": true
-		},
-		{
 			"key": "PASSWORD",
 			"description": "Cdn password",
 			"required": true
