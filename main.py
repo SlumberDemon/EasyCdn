@@ -19,23 +19,28 @@ async def home(request: fastapi.Request):
 def upload_file(
     request: fastapi.Request,
     password: str,
-    file: fastapi.UploadFile = fastapi.File(...),
+    file: fastapi.UploadFile,
 ):
-    if password == f"{os.getenv('PASSWORD')}":
+    if password == os.getenv('PASSWORD'):
         name = files.put(file.filename.replace(" ", "_"), file.file)
         return {
             "file": f"{request.url.scheme}://{request.url.hostname}/{name}",
         }
     else:
-        return {"Error": "Password incorrect"}
+        return {"error": "Password incorrect"}
 
 
 @app.get("/{name}")
 def cdn(name: str):
     img = files.get(name)
-    ext = name.split(".")[1]
-    return fastapi.responses.StreamingResponse(
-        img.iter_chunks(), media_type=f"image/{ext}"
+    if img is None:
+        raise fastapi.HTTPException(status_code=404)
+    ext = name.split(".")[-1]
+    return fastapi.responses.Response(
+        img.read(),
+        media_type=f"image/{ext}",
+        # Cache for 24 hours.
+        headers={"Cache-Control": "public, max-age=86400"},
     )
 
 
