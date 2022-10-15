@@ -33,6 +33,8 @@ def upload_file(
 @app.get("/{name}")
 def cdn(name: str):
     img = files.get(name)
+    if img is None:
+        raise fastapi.HTTPException(status_code=404)
     ext = name.split(".")[1]
     return fastapi.responses.Response(
         img.read(),
