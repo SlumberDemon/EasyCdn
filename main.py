@@ -37,6 +37,8 @@ def cdn(name: str):
     return fastapi.responses.Response(
         img.read(),
         media_type=f"image/{ext}",
+        # Cache for 24 hours.
+        headers={"Cache-Control": "public, max-age=86400"},
     )
 
 
