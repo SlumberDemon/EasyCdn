@@ -34,8 +34,9 @@ def upload_file(
 def cdn(name: str):
     img = files.get(name)
     ext = name.split(".")[1]
-    return fastapi.responses.StreamingResponse(
-        img.iter_chunks(), media_type=f"image/{ext}"
+    return fastapi.responses.Response(
+        img.read(),
+        media_type=f"image/{ext}",
     )
 
 
